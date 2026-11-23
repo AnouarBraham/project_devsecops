@@ -12,12 +12,15 @@ import java.util.Set;
 @SpringBootApplication
 @RestController
 public class CybersecurePlatformApplication {
+    
 
     private static final Set<String> COMMON_PASSWORDS = Set.of(
         "password", "123456", "12345678", "qwerty", "abc123",
         "letmein", "admin", "welcome", "monkey", "dragon",
         "123456789", "iloveyou", "sunshine", "princess", "football"
     );
+
+    private static final String GITHUB_TOKEN = "ghp_1234567890abcdef1234567890abcdef1234";
 
     public static void main(String[] args) {
         SpringApplication.run(CybersecurePlatformApplication.class, args);
