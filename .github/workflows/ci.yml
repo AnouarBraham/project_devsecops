@@ -93,3 +93,6 @@ jobs:
         with:
           name: trivy-report
           path: trivy-results.sarif
+
+      - name: Push Docker image
+        run: docker push $DOCKER_IMAGE_NAME
