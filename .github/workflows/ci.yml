@@ -1,4 +1,3 @@
-
 name: CI - CyberSecure Platform
 
 on:
@@ -72,7 +71,7 @@ jobs:
           docker rm cybersecure-test
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@76071ef0d7ec797419534a183b498b4d6366cf37 # v0.31.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}
           format: 'table'
@@ -81,7 +80,7 @@ jobs:
 
       - name: Upload Trivy report
         if: always()
-        uses: aquasecurity/trivy-action@76071ef0d7ec797419534a183b498b4d6366cf37 # v0.31.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}
           format: 'sarif'
