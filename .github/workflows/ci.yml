@@ -58,3 +58,27 @@ jobs:
           curl -f http://localhost:8080 || (docker logs cybersecure-test && exit 1)
           docker stop cybersecure-test
           docker rm cybersecure-test
+
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: ${{ env.DOCKER_IMAGE_NAME }}
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy report
+        if: always()
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: ${{ env.DOCKER_IMAGE_NAME }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-results.sarif
