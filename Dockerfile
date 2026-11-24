@@ -13,8 +13,14 @@ RUN apk add --no-cache maven && mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Copy only the built jar from the previous stage
-COPY --from=build /app/target/cybersecure-platform-0.0.1-SNAPSHOT.jar app.jar
+# Create a non-root user and group for runtime security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Copy only the built jar from the previous stage, owned by the non-root user
+COPY --from=build --chown=appuser:appgroup /app/target/cybersecure-platform-0.0.1-SNAPSHOT.jar app.jar
+
+# Switch to the non-root user
+USER appuser
 
 # Document the port (doesn't actually publish it — that's -p on run)
 EXPOSE 8080
