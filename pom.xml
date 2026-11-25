@@ -7,35 +7,35 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.2.0</version>
+        <version>4.2.0</version>                       <!-- Spring Boot parent: manages versions of all dependencies -->
         <relativePath/>
     </parent>
 
-    <groupId>com.cybersecure</groupId>
-    <artifactId>cybersecure-platform</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>cybersecure-platform</name>
-    <description>CyberSecure Platform</description>
+    <groupId>com.cybersecure</groupId>                  <!-- project group id (like a company/domain name) -->
+    <artifactId>cybersecure-platform</artifactId>      <!-- project artifact id (the project name) -->
+    <version>0.0.1-SNAPSHOT</version>                  <!-- project version (SNAPSHOT = in development) -->
+    <name>cybersecure-platform</name>                  <!-- human-readable name -->
+    <description>CyberSecure Platform</description>    <!-- short description of the project -->
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>21</java.version>                <!-- Java version used to compile and run the app -->
     </properties>
 
     <dependencies>
-    
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>            <!-- web framework: REST controllers, embedded Tomcat -->
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>       <!-- exposes /actuator endpoints (health, metrics, etc.) -->
         </dependency>
 
         <dependency>
             <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
+            <artifactId>micrometer-registry-prometheus</artifactId>     <!-- formats metrics for Prometheus at /actuator/prometheus -->
         </dependency>
 
     </dependencies>
@@ -44,7 +44,7 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>spring-boot-maven-plugin</artifactId>       <!-- packages the app as a runnable jar with embedded server -->
             </plugin>
         </plugins>
     </build>
