@@ -1,28 +1,28 @@
 services:
   prometheus:
-    image: prom/prometheus:v2.55.0           # Prometheus 2.55 LTS (compatible with Spring Boot 4 Accept header)
-    container_name: prometheus
+    image: prom/prometheus:v2.55.0            # Prometheus 2.55 LTS image (compatible with Spring Boot 4 Accept header)
+    container_name: prometheus               # fixed container name so we can reference it easily
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml   # mount our config file into the container
     ports:
-      - "9090:9090"
+      - "9090:9090"                          # host 9090 -> container 9090 (Prometheus web UI)
     networks:
-      - monitoring
+      - monitoring                           # join the custom network so Grafana can reach it
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"  # lets Prometheus reach the HOST machine (our app on :8080)
 
   grafana:
-    image: grafana/grafana:11.5.0
-    container_name: grafana
+    image: grafana/grafana:11.5.0            # Grafana dashboard image
+    container_name: grafana                  # fixed container name
     ports:
-      - "3001:3000"
+      - "3001:3000"                          # host 3001 -> container 3000 (Grafana UI; 3000 is often already used)
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin     # sets the admin password to "admin" (default user is admin)
     depends_on:
-      - prometheus
+      - prometheus                           # start Grafana after Prometheus is up
     networks:
-      - monitoring
+      - monitoring                           # same network so it can reach Prometheus by name
 
 networks:
   monitoring:
-    driver: bridge
+    driver: bridge                           # standard isolated network shared by both services
